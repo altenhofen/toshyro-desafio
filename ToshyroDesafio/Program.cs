@@ -24,15 +24,20 @@ class Program
         var isRunning = true;
         while (isRunning)
         {
+            // prompt
             Console.Write(">> ");
             var line = Console.ReadLine();
 
+            // split the input whitespaces
             var tokens = line.Split(" ");
 
-            var sum = 0.0; // sum of all coins
+            // sum of all coins
+            var sum = 0.0; 
 
+            // did the customer ask for a change?
             var change = false;
 
+            // product chosen by the costumer
             string productChosen = "";
             
             foreach (var token in tokens)
@@ -43,8 +48,8 @@ class Program
                 {
                     if (coins.ContainsKey(token) && coins[token] > 0)
                     {
-                        sum += value;
-                        coins[token]--;
+                        sum += value; // add value of token to the coin sum
+                        coins[token]--; // remove coin from dictionary
                     }
                     else
                     {
@@ -52,6 +57,7 @@ class Program
                     }
                 }
 
+                // if token equals product.Name, then productChosen = token
                 if (token.ToLower() == cocaCola.Name.ToLower() ||
                     token.ToLower() == pastelina.Name.ToLower() ||
                     token.ToLower() == agua.Name.ToLower()
@@ -60,17 +66,22 @@ class Program
                     productChosen = token.ToLower();
                 }
                 
+                
+                // assign change boolean if the customer asks for it
                 if (token == "CHANGE")
                 {
                     change = true;
                 }
 
+                // exit command
                 if (token == "exit")
                 {
                     return;
                 }
             }
             
+            // after the for loop, we call our ProcessPurchase function
+            // I think it's better just to pass the instances as arguments
             ProcessPurchase(sum, cocaCola, pastelina, agua, change, productChosen);
         }
     }
